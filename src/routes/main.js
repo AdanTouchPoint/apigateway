@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
 
     let phonePass
     let emailPass
-
+//redireccion a https://worky.mx/
     try {
         const email = req.body.email
         const phone = req.body.phone
@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
         const firstname = req.body.firstname
         const lastname = req.body.lastname
         const numemployees = req.body.numemployees
-        // const role = req.body.role
-        // const medio_de_contacto_de_preferencia = req.body.medio_de_contacto_de_preferencia
+        const role = req.body.role
+        const medio_de_contacto_de_preferencia = req.body.medio_de_contacto_de_preferencia
 
         const properties = {
             "company": company,
@@ -25,9 +25,9 @@ router.post('/', async (req, res) => {
             "firstname": firstname,
             "lastname": lastname,
             "phone": phone,
-            // "numemployees": numemployees,
-            // "role": role,
-            // "medio_de_contacto_de_preferencia": medio_de_contacto_de_preferencia
+            "numemployees": numemployees,
+            "role": role,
+            "medio_de_contacto_de_preferencia": medio_de_contacto_de_preferencia
         }
         const simplePublicObjectInput = {properties}
 
