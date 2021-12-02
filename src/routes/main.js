@@ -10,27 +10,27 @@ router.post('/', async (req, res) => {
     let emailPass
 
     try {
+        const idForm =  req.body.idForm
         const email = req.body.email
         const phone = req.body.phone
-        const company = req.body.company
-        const firstname = req.body.firstname
-        const lastname = req.body.lastname
+       // const company = req.body.company
+      //  const firstname = req.body.firstname
+      /*  const lastname = req.body.lastname
         const numemployees = req.body.numemployees
         const role = req.body.role
         const medio_de_contacto_de_preferencia = req.body.medio_de_contacto_de_preferencia
-        const hs_context = req.body.hs_context
+        const hs_context = req.body.hs_context */
         // const {email, phone, company, firstname, lastname,numemployees,role,medio_de_contacto_de_preferencia} = req.body
-
         const form = new FormData();
-        form.append("company", company)
+       // form.append("company", company)
         form.append("email", email)
-        form.append("firstname", firstname)
-        form.append("lastname", lastname)
+       // form.append("firstname", firstname)
+       // form.append("lastname", lastname)
         form.append("phone", phone)
-        form.append("numemployees", numemployees)
-        form.append("role", role)
-        form.append("medio_de_contacto_de_preferencia", medio_de_contacto_de_preferencia)
-        form.append('hs_context', hs_context)
+       // form.append("numemployees", numemployees)
+       // form.append("role", role)
+       // form.append("medio_de_contacto_de_preferencia", medio_de_contacto_de_preferencia)
+        //form.append('hs_context', hs_context)
 
         //const simplePublicObjectInput = {properties}
         const verifyPhone = async phone => {
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
                 console.log(`${data.score} Muy Bueno`)
                 const options = {
                     method: 'POST',
-                    url: ' https://forms.hsforms.com/submissions/v3/public/submit/formsnext/multipart/6028632/4cc82d56-97c6-4383-b43d-5336eea76cb0',
+                    url:`https://forms.hsforms.com/submissions/v3/public/submit/formsnext/multipart/6028632/${idForm}`,
                     //
                     headers: {
                         ...form.getHeaders()
