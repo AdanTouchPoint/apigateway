@@ -20,7 +20,8 @@ router.post('/', async (req, res) => {
         const role = req.body.role
         const medio_de_contacto_de_preferencia = req.body.medio_de_contacto_de_preferencia
         const hs_context = req.body.hs_context 
-        const {email, phone, company, firstname, lastname,numemployees,role,medio_de_contacto_de_preferencia} = req.body
+        
+        //const {email, phone, company, firstname, lastname,numemployees,role,medio_de_contacto_de_preferencia} = req.body
         const form = new FormData();
         form.append("company", company)
         form.append("email", email)
@@ -32,7 +33,7 @@ router.post('/', async (req, res) => {
         form.append("medio_de_contacto_de_preferencia", medio_de_contacto_de_preferencia)
         form.append('hs_context', hs_context)
 
-        const simplePublicObjectInput = {properties}
+        //const simplePublicObjectInput = {properties}
         const verifyPhone = async phone => {
             console.log(phone)
             phonePass = await axios.post(`http://apilayer.net/api/validate?access_key=${process.env.PHONE_KEY}&number=${phone}&country_code=MX&format=1`)
