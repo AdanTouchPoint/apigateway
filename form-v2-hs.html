@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form Worky 2.0</title>
+</head>
+<body>
+<div id="custum_module_form">
+<script charset="utf-8" type="text/javascript" src="https://js.hsforms.net/forms/v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script> 
+
+    let idForm = "b93eb1a7-2ded-49c3-b3c1-cf57aaca853f";  //b93eb1a7-2ded-49c3-b3c1-cf57aaca853f  
+    let typ_redirect = 'https://worky.mx'; //https://worky.mx
+    let msg_phone = "¡Error: Introduce un teléfono válido!"; //¡Error: Introduce un teléfono válido! 2
+    let msg_email = " ¡Error: Intenta con otro Correo!"; //¡Error: Intenta con otro Correo!
+
+    let getData = function (e) {
+        const url = 'https://api-phone-email-validation.herokuapp.com';
+        let formbyID = document.getElementById('hs-form-iframe-0').contentWindow.document.getElementById("hsForm_"+idForm);
+        
+        var op = formbyID.getElementsByTagName("option");
+        for (var i = 0; i < op.length; i++) {
+            // console.log('op',i,'value:',op[i].value);
+          if (op[i].value.toLowerCase() == "") {
+            op[i].disabled = false;
+          }
+        }
+        var validate = 1;
+
+        cargador.style.display="block";
+        blanco.style.display="block";
+
+        var data = $(formbyID).serializeArray().reduce(function(obj, item) {
+            obj[item.name] = item.value;
+            if (item.value == "") {validate = 0}
+            // console.log(item.name,"=",item.value);
+            return obj;
+        }, {});
+
+        data.idForm = idForm;
+
+        if (validate == 1) {
+            console.log("Data",data);            
+            fetch('http://localhost:8080', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.status === 200) {
+                    e.preventDefault()
+                    location.href = typ_redirect
+                }
+                console.log(response.status)
+                if (response.status === 208) {
+                    e.preventDefault()
+                    alert(msg_phone);
+                    cargador.style.display="none";
+                    blanco.style.display="none";
+                } else if (response.status === 206) {
+                    e.preventDefault()
+                    alert(msg_email);
+                    cargador.style.display="none";
+                    blanco.style.display="none";
+                }
+            }).catch(e => {
+                console.error(e)
+            })
+        }
+        else{
+            console.log("Campos vacios");
+            cargador.style.display="none";
+            blanco.style.display="none";
+        }        
+        
+    }
+    hbspt.forms.create({
+        region: "na1",
+        portalId: "6028632",
+        formId: idForm,
+        onFormReady: function ($form) {
+            const edit_form = document.getElementById('hs-form-iframe-0').contentWindow.document.getElementById('hsForm_'+idForm);
+            $($form).attr('action', 'xxxx');
+            edit_form.addEventListener('submit', function (e) {
+                // e.preventDefault()
+                // actions
+                getData(e)
+            }, false);
+        }
+    });
+    window.onload = function(){
+        let cargador = document.getElementById("cargador");
+        let blanco = document.getElementById("blanco");
+        cargador.style.display="none";
+        blanco.style.display="none";
+        let frameElement = document.getElementById("hs-form-iframe-0");
+        let doc = frameElement.contentDocument;
+        var link = document.createElement("link");
+        link.href = "get_asset_url(https://cdn2.hubspot.net/hub/6028632/hub_generated/template_assets/61152059918/1638570083025/Coded_files/Custom/validation-form.min.css)";
+        link.rel = "stylesheet";
+        link.type = "text/css"; 
+        doc.head.appendChild(link);
+    };
+</script>
+<img src="https://landing.worky.mx/hubfs/Landings/tpm/loading-buffering.gif" alt="loading..." id="cargador">
+<div id="blanco"></div>
+</div>
+</body>
+</html>
