@@ -8,13 +8,18 @@ const cors = require('cors')
 const port = process.env.PORT || 8080
 // configurar cors con la direccion del front
 app.use(cors({origin: '*'}))
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
 //Routes
 
-app.use(require('./src/routes/main'))
+//app.use(require('./src/routes/main'))
+//app.use(require('./src/routes/kentta'))
+const kentta = require('./src/routes/kentta')
+app.use('/kentta', kentta)
 
+const main = require('./src/routes/main')
+app.use('/', main)
 
 
 // const start = async () => {

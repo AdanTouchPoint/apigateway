@@ -1,41 +1,33 @@
-const {
-    Router
-} = require('express');
+const {Router} = require('express');
 const axios = require('axios')
 const router = Router();
-const hubspot = require('../lib/hubSpot')
-const FormData = require('form-data');
 
 router.post('/', async (req, res) => {
     console.log(req.body)
-    const item = req.body
+    const item= req.body
     let phonePass
     let emailPass
 
     try {
         console.log(item.phone)
-        const idForm = req.body.idForm
+ 
         const email = req.body.email
         const phone = req.body.phone
-        const form = new FormData();
-
-        for (var key in item) {
-            form.append(key, item[key]);
-        }
-
+       
+        
         const verifyPhone = async phone => {
-            if (phone === "" || !phone) {
-                phonePass = "Phone is  required"
-                return phonePass
+            if (phone === "" || !phone ) {
+                phonePass = "Falta numero de telefono"
+            return phonePass
             } else {
                 console.log(phone)
-                phonePass = await axios.post(`http://apilayer.net/api/validate?access_key=${process.env.PHONE_KEY}&number=${phone}&country_code=MX&format=1`)
+                phonePass = await axios.post(`http://apilayer.net/api/validate?access_key=${process.env.PHONE_KEY_KENTTA}&number=${phone}&country_code=MX&format=1`)
                 return phonePass.data.valid
             }
         }
         const verifyEmail = async email => {
             console.log(email)
-            emailPass = await axios.post(`https://api.emailable.com/v1/verify?email=${email}&api_key=${process.env.EMAIL_KEY}`)
+            emailPass = await axios.post(`https://api.emailable.com/v1/verify?email=${email}&api_key=${process.env.EMAIL_KEY_KENTTA}`)
             return emailPass.data.score
         }
         const verify = async (phone, email) => {
@@ -43,10 +35,7 @@ router.post('/', async (req, res) => {
             let score = await verifyEmail(email).catch(e => console.error(e))
             console.log(score)
             console.log(valid)
-            return {
-                valid,
-                score
-            }
+            return {valid, score}
         }
         verify(phone, email).then(async (data) => {
             console.log(data.score)
@@ -59,41 +48,34 @@ router.post('/', async (req, res) => {
                 });
                 return
             }
+            else if (data.valid === true){
+                res.json({
+                    success: true,
+                    message: 'Numero de telefono  valido'
+                });
+            }
             if (data.score >= 50) {
                 console.log(`${data.score} Muy Bueno`)
-                const options = {
-                    method: 'POST',
-                    url: `https://forms.hsforms.com/submissions/v3/public/submit/formsnext/multipart/6028632/${idForm}`,
-                    //
-                    headers: {
-                        ...form.getHeaders()
-                    },
-                    data: form
-                };
-
-                axios.request(options).then(function (response) {
-                    console.log(response.data);
-                    res.json({
-                        success: true,
-                        message: 'contacto creado'
-                    });
-                }).catch(function (error) {
-                    console.error(error);
+                res.json({
+                    success: false,
+                    message: 'Correo Valido'
                 });
-            } else if (data.score >= 25) {
-                console.log('25 -49 regular ')
+            }
+             else if (data.score >= 25) {
+                console.log(`${data.score}  Regular`)
                 res.status(206);
                 res.json({
                     success: false,
                     message: 'intenta con otro  correo'
                 });
             } else if (data.score >= 0) {
-                console.log('0-24 mal')
+                console.log(`${data.score}  Mal`)
                 res.status(206)
                 res.json({
                     success: false,
                     message: 'intenta con otro  correo'
                 });
+                
             }
         })
     } catch (error) {
