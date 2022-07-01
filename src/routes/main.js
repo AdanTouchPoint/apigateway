@@ -13,7 +13,16 @@ router.post('/', async (req, res) => {
     let emailPass
 
     try {
-        console.log(item.phone)
+
+        if (item) {
+            res.status(206)
+            res.json({
+                success: false,
+                message: 'Correo y telefono invalidos intenta con otros'
+            }); 
+        }
+
+       /* console.log(item.phone)
         const idForm = req.body.idForm
         const email = req.body.email
         const phone = req.body.phone
@@ -47,8 +56,8 @@ router.post('/', async (req, res) => {
                 valid,
                 score
             }
-        }
-        verify(phone, email).then(async (data) => {
+        } */
+        /* verify(phone, email).then(async (data) => {
             console.log(data.score)
             console.log(data.valid)
             if (data.valid === false) {
@@ -95,7 +104,7 @@ router.post('/', async (req, res) => {
                     message: 'intenta con otro  correo'
                 });
             }
-        })
+        })*/
     } catch (error) {
         res.status(400)
         res.json({

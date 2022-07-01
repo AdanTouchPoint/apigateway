@@ -1,9 +1,8 @@
 <script type="text/javascript">
-    //window.onload = function () {}
+    window.onload = function () {
 
-   
 
-    let getData = function (e) {
+        let getData = function (e) {
         e.preventDefault();
         const url = 'https://api-phone-email-validation.herokuapp.com/kentta'
        
@@ -11,17 +10,11 @@
         console.log(email)
         let phone = document.getElementById("phone").value;
         console.log(phone)
-        let request
-        
-        phone ? request = {
+        let request = {
                 email,
                 phone,
-            } : request = {
-                email,
-            }
-      
-
-          fetch( 'http://localhost:8080/kentta', {
+        }
+          fetch( 'https://api-phone-email-validation.herokuapp.com/kentta', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -30,10 +23,14 @@
             body: JSON.stringify(request)
         }).then(response => {
             console.log(response.status)
-            if (response.status === 208) {
+            if (response.status === ) {
                 alert("Introduce un telefono valido")
             } else if (response.status === 206) {
                 alert("Intenta con otro Correo")
+            } else if (response.status === 200) {
+               let form =  document.getElementById("interesado_propiedad").submit()
+               //form.submit()
+               console.log(form)
             }
         }).catch(e => {
             console.error(e)
@@ -42,6 +39,12 @@
 
     document.getElementsByClassName("btn-cafe-propiedad")[0].onclick = getData;
         console.log("loaded button")
+        
+    }
+
+   
+
+
 
 </script>
 
@@ -96,3 +99,139 @@ let getData = function (e) {
 document.getElementsByClassName("btn-cafe-propiedad")[0].onclick = getData;
     console.log("loaded button")
 
+<script>
+
+
+    document.onreadystatechange = function () {
+        if (document.readyState === 'complete') {
+            var container = document.getElementsByTagName("form")[0]
+            console.log(container);
+            var div = document.createElement("div")
+                  div.setAttribute("class", "form-group");
+            var label = document.createElement("label")
+                  label.name= "bid";
+                  label.textContent="Bid"
+                  label.setAttribute("class", "required");
+            div.appendChild(label)
+            var input = document.createElement("input");
+                  input.type = "text";
+                  input.name = "bid";
+                  input.id="bid";
+                  input.setAttribute("class", "form-control");
+                      
+                      div.appendChild(input)
+                      container.appendChild(div);
+        }
+      }
+
+
+
+    </script>
+
+      <style>
+        .main-page-content > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) {
+        display: none
+        }
+        </style>
+        
+        <style>
+        
+        #subscription-first-step {
+        display: none
+        };
+        </style>    
+        
+    
+    
+    <script>  
+    
+    
+    var container = document.getElementsByClassName("padding-8 btn-block bg-white-hard text-center")[0]
+           
+    var div = document.createElement("div")
+        div.setAttribute("class", "row");  
+      
+    var divB = document.createElement("div")
+        divB.setAttribute("class", "col-sm-12");   
+        
+    var divform = document.createElement("div")
+        divform.setAttribute("class", "form-group");      
+       
+    var spanButton = document.createElement("a")
+        spanButton.setAttribute("class", "btn btn-file btn-custom-file btn-gray-light-border box-shadow-none btn-block active");     
+        spanButton.textContent="Download TFN"
+        spanButton.setAttribute('target', 'blank')
+        spanButton.setAttribute('onclick', "window.location.href='https://www.gigaminute.com/company';")
+       
+    var divText = document.createElement("div")
+        divText.setAttribute("class", "text-center");
+        divText.textContent=" Click button and Fill your TFN form , download it and then upload it on the button bellow" 
+       divform.appendChild(divText)
+       divform.appendChild(spanButton)
+       divB.appendChild(divform)
+       div.appendChild(divB)
+       container.appendChild(div)
+
+       
+       </script> 
+
+window.open('https://prod-doccafe-public.s3.amazonaws.com/uploads/media/62bb90136fdd9.pdf', "_blank") || window.location.replace('https://prod-doccafe-public.s3.amazonaws.com/uploads/media/62bb90136fdd9.pdf')
+
+
+<script>  
+    
+    
+    var container = document.getElementsByClassName("form-group")[0]
+           
+    var p = document.createElement("p")
+        p.textContent="You can send a message to company and give a BID for this job! ";  
+      
+    var divB = document.createElement("div")
+        divB.setAttribute("class", "col-sm-12");   
+        
+    var divform = document.createElement("div")
+        divform.setAttribute("class", "form-group");      
+       
+    var spanButton = document.createElement("a")
+        spanButton.setAttribute("class", "btn btn-file btn-custom-file btn-gray-light-border box-shadow-none btn-block active");     
+        spanButton.textContent="Download TFN"
+        spanButton.setAttribute('target', 'blank')
+        spanButton.setAttribute('onclick', "window.location.href='https://www.gigaminute.com/company';")
+       
+    var divText = document.createElement("div")
+        divText.setAttribute("class", "text-center");
+        divText.textContent=" Click button and Fill your TFN form , download it and then upload it on the button bellow" 
+       divform.appendChild(divText)
+       divform.appendChild(spanButton)
+       divB.appendChild(divform)
+       div.appendChild(divB)
+       container.appendChild(div)
+
+       
+       </script> 
+
+
+
+<script>
+    document.onreadystatechange = function () {
+      if (document.readyState === 'complete') {
+          var container = document.getElementsByClassName("form-group")[0]
+          console.log(container);
+          var div = document.createElement("div")
+                div.setAttribute("class", "form-group");
+          var label = document.createElement("label")
+                label.name= "bid";
+                label.textContent="Bid"
+                label.setAttribute("class", "required");
+          div.appendChild(label)
+          var input = document.createElement("input");
+                input.type = "text";
+                input.name = "bid";
+                input.id="bid";
+                input.setAttribute("class", "form-control");
+                    
+                    div.appendChild(input)
+                    container.appendChild(div);
+      }
+    }
+    </script>
